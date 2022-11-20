@@ -1,4 +1,6 @@
 import * as api from "./helper/api.js";
+import * as bootstrap from "bootstrap/js/src/collapse.js";
+
 import { timestampToTime } from "./helper/date.js";
 import { successAlert, errorAlert } from "./helper/alert.js";
 

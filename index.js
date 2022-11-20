@@ -1,4 +1,5 @@
 import * as api from "./helper/api.js";
+import * as bootstrap from "bootstrap/js/src/collapse.js";
 import validate from "validate.js";
 import Aos from "aos";
 import { constraints } from "./helper/validate.js";
@@ -35,7 +36,7 @@ let product = {
         productItems.forEach(item => {
             const { id, category, title, price, origin_price, images } = item;
             htmlStr += `
-                        <div class="col-lg-3 product__item">
+                        <div class="col-4 col-lg-3 product__item">
                             <div class="product__item__img">
                                 <img class="img-fluid" src="${images}" data-id="${id}" alt="${title}" />
                             </div>
