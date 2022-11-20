@@ -1,0 +1,31 @@
+{
+  "name": "hexschool-js-finalwork",
+  "author": {
+    "name": "weij0",
+    "email": "weijlin850621@gmail.com"
+  },
+  "homepage": "https://WeiJ0.github.io/Hexscholl-JSLive-Final/",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0",
+    "sass": "^1.56.1",
+    "vite": "^3.2.3",
+    "vite-plugin-html": "^3.2.0"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "axios": "^1.1.3",
+    "bootstrap": "^5.2.2",
+    "bootstrap-icons": "^1.10.2",
+    "sweetalert2": "^11.6.9",
+    "validate.js": "^0.13.1"
+  }
+}
