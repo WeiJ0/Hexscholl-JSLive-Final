@@ -37,6 +37,7 @@ let order = {
         let dataset;
 
         if (type === 'category') {
+
             const category = products.map(item => item.category).reduce((acc, cur) => {
                 if (acc[cur]) {
                     acc[cur]++;
@@ -45,8 +46,12 @@ let order = {
                 }
                 return acc;
             }, {});
+
             dataset = Object.entries(category);
+
         } else if (type === 'product') {
+
+            // 整理成 [產品名稱 , 產品數量]
             const product = products.map(item => item.title).reduce((acc, cur) => {
                 if (acc[cur]) {
                     acc[cur]++;
@@ -56,6 +61,7 @@ let order = {
                 return acc;
             }, {});
 
+            // 整理成題目條件，取前三者，後者皆為其他
             dataset = Object.entries(product)
                 .sort((a, b) => b[1] - a[1])
                 .reduce((acc, cur, index) => {
@@ -68,7 +74,6 @@ let order = {
 
                     return acc;
                 }, []);
-            console.log(dataset);
         }
 
         this.renderChart(dataset);
@@ -93,14 +98,17 @@ let order = {
         let htmlStr = '';
         this.data.forEach(item => {
             const { id, paid, user, products, createdAt } = item;
-            const { name, tel, email, address, payment } = user;
+            const { name, tel, email, address } = user;
             const productItems = products.map(item => item.title).join('<br>');
 
+            // 切換付款狀態
             const paidSwitch = `<div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" id="paid_${id}" data-id="${id}" ${paid ? "checked" : ""}>
                                     <label class="form-check-label" for="paid_${id}">${paid ? "已付款" : "未付款"}</label>
                                     <span class="d-none loading spinner-border spinner-border-sm" role="status"></span>
                                 </div>`;
+
+            // 刪除按鈕
             const delBtn = `<button class="btn btn-danger btn-sm data__remove" data-id="${id}">
                                 刪除
                                 <span class="d-none loading spinner-border spinner-border-sm" role="status"></span>

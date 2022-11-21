@@ -1,3 +1,4 @@
+/* validate.js 條件 */
 export const constraints = {
     "name": {
         presence: {

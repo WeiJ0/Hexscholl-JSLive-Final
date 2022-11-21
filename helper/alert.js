@@ -14,6 +14,10 @@ export const errorAlert = (text) => {
     })
 }
 
+/* 
+    @param {Array} product Array
+    @return {Promise} 按下購物車後執行
+*/
 export const productAlert = (data) => {
     const { id, category, description, title, price, origin_price, images } = data;
     return Swal.fire({
