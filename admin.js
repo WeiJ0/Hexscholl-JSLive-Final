@@ -35,6 +35,7 @@ let order = {
     render: function (type = 'category') {
         const products = this.data.map(item => item.products).flat();
         let dataset;
+
         if (type === 'category') {
             const category = products.map(item => item.category).reduce((acc, cur) => {
                 if (acc[cur]) {
@@ -54,7 +55,20 @@ let order = {
                 }
                 return acc;
             }, {});
-            dataset = Object.entries(product);
+
+            dataset = Object.entries(product)
+                .sort((a, b) => b[1] - a[1])
+                .reduce((acc, cur, index) => {
+                    if (index < 3)
+                        acc.push(cur);
+                    else if (index === 3)
+                        acc.push(['其他', cur[1]]);
+                    else
+                        acc[3][1] += cur[1];
+
+                    return acc;
+                }, []);
+            console.log(dataset);
         }
 
         this.renderChart(dataset);

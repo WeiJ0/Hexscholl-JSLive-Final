@@ -37,6 +37,7 @@ let product = {
             const { id, category, title, price, origin_price, images } = item;
             htmlStr += `
                         <div class="col-4 col-lg-3 product__item">
+                            <div class="product__item__tag">新品</div>
                             <div class="product__item__img">
                                 <img class="img-fluid" src="${images}" data-id="${id}" alt="${title}" />
                             </div>
@@ -296,6 +297,7 @@ let form = {
             formLoading.classList.add('d-none');
     }
 }
+
 
 product.init();
 cart.init();
