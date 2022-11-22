@@ -124,6 +124,17 @@ let cart = {
         this.items.forEach(item => {
             const { id, quantity, product } = item;
             const { title, price, images } = product;
+
+            // 數量下拉選單
+            const countDropdown = `
+                <select class="cartCount form-select w-50 d-inline-block" data-id="${id}">
+                    ${Array.from(Array(10).keys()).map((i) =>
+                        `<option value="${i + 1}" ${i + 1 === quantity ? 'selected' : ''}>
+                        ${i + 1}</option>`).join('')}
+                </select>
+                <span data-id="${id}" class="d-none loading spinner-border spinner-border-sm" role="status"></span>
+                `;
+
             htmlStr += `
                         <tr class="cart__item">
                             <td>
@@ -133,7 +144,7 @@ let cart = {
                                 </div>
                             </td>
                             <td>NT$${price}</td>
-                            <td>${quantity}</td>
+                            <td>${countDropdown}</td>
                             <td>${price * quantity}</td>
                             <td>
                                 <a href="#" class="h3 cart__item__remove" data-id="${id}">
@@ -165,6 +176,15 @@ let cart = {
                 const id = e.target.dataset.id;
                 this.remove(id);
                 e.stopPropagation();
+            })
+        })
+
+        const countDropdown = document.querySelectorAll('.cartCount');
+        countDropdown.forEach(dropdown => {
+            dropdown.addEventListener('change', (e) => {
+                const id = e.target.dataset.id;
+                const quantity = e.target.value * 1;
+                this.update(id, quantity);
             })
         })
     },
@@ -232,6 +252,40 @@ let cart = {
             }
         })
     },
+    update: function (id, quantity) {
+        const loading = document.querySelector(`.loading[data-id="${id}"]`);
+
+        if (!loading.classList.contains('d-none'))
+            return;
+
+        this.countLoading(id, true);
+
+        api.apiUpdateCart({
+            "data": {
+                id,
+                quantity
+            }
+        }).then((res) => {
+            const { status, carts, finalTotal, message } = res.data;
+            if (status) {
+                this.items = carts;
+                cartTotal.textContent = finalTotal;
+                this.renderCarts();
+                this.eventBind();
+                this.countLoading(id, false);
+            } else {
+                errorAlert(message);
+            }
+        })
+    },
+    countLoading: function (id, show) {
+        const spinner = document.querySelector(`.loading[data-id="${id}"]`);
+
+        if (show)
+            spinner.classList.remove('d-none');
+        else
+            spinner.classList.add('d-none');
+    },
     // 按下清空購物車按鈕時，顯示 loading
     clearLoading: function (show) {
         if (show)
@@ -276,6 +330,7 @@ let form = {
                 successAlert('訂單送出成功');
                 this.submitLoading(false);
                 this.element.reset();
+                cart.init();
             } else {
                 errorAlert(message);
             }

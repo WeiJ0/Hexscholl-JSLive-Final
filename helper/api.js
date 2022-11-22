@@ -24,7 +24,7 @@ export const apiGetProduct = data => userRequest.get('/products');
 // 購物車
 export const apiGetCart = () => userRequest.get('/carts');
 export const apiAddCart = data => userRequest.post('/carts', data);
-export const apiModifyCart = data => userRequest.patch('/carts', data);
+export const apiUpdateCart = data => userRequest.patch('/carts', data);
 export const apiClearCart = () => userRequest.delete(`/carts/`);
 export const apiDeleteCart = id => userRequest.delete(`/carts/${id}`);
 
