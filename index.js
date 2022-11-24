@@ -75,6 +75,14 @@ let product = {
 
                 const id = e.target.dataset.id;
                 this.addLoading(id, true);
+
+                // 若已在購物車內，則不再加入
+                if (cart.items.map(item => item.id).includes(id)) {
+                    this.addLoading(id, false);
+                    errorAlert('此商品已在購物車內');
+                    return;
+                }
+
                 cart.add(id);
             })
         })
@@ -129,7 +137,7 @@ let cart = {
             const countDropdown = `
                 <select class="cartCount form-select w-50 d-inline-block" data-id="${id}">
                     ${Array.from(Array(10).keys()).map((i) =>
-                        `<option value="${i + 1}" ${i + 1 === quantity ? 'selected' : ''}>
+                `<option value="${i + 1}" ${i + 1 === quantity ? 'selected' : ''}>
                         ${i + 1}</option>`).join('')}
                 </select>
                 <span data-id="${id}" class="d-none loading spinner-border spinner-border-sm" role="status"></span>
@@ -301,6 +309,12 @@ let form = {
         this.element = document.querySelector('#form');
         this.element.addEventListener('submit', (e) => {
             e.preventDefault();
+
+            if (cart.items.length === 0) {
+                errorAlert('請先加入商品');
+                return;
+            }
+
             this.submitEvent();
         })
     },
