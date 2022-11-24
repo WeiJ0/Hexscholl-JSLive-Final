@@ -207,7 +207,6 @@ let order = {
                 this.render();
                 this.renderTable();
                 successAlert('刪除成功');
-                this.removeLoading(id, false)
             } else
                 errorAlert(message);
         })
