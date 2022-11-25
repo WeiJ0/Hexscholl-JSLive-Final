@@ -51,12 +51,12 @@ let order = {
 
         } else if (type === 'product') {
 
-            // 整理成 [產品名稱 , 產品數量]
-            const product = products.map(item => item.title).reduce((acc, cur) => {
-                if (acc[cur]) {
-                    acc[cur]++;
+            // 整理成 [產品名稱 , 產品總數數量]
+            const product = products.map(item => [item.title, item.quantity]).reduce((acc, cur) => {
+                if (acc[cur[0]]) {
+                    acc[cur[0]] += cur[1];
                 } else {
-                    acc[cur] = 1;
+                    acc[cur[0]] = cur[1];
                 }
                 return acc;
             }, {});
